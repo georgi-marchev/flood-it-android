@@ -20,9 +20,9 @@ import com.gmarchev.floodit.core.strategy.FloodStrategyFactory;
 
 public class MainActivity extends AppCompatActivity implements GameObserver {
 
-    private final int rows = 10;
+    private final int ROWS = 10;
 
-    private final int cols = 10;
+    private final int COLS = ROWS;
 
     private int[] colors;
 
@@ -65,12 +65,12 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
     private void createBoard() {
 
         GridLayout grid = findViewById(R.id.board);
-        grid.setRowCount(rows);
-        grid.setColumnCount(cols);
-        View[][] board = new View[rows][cols];
+        grid.setRowCount(ROWS);
+        grid.setColumnCount(COLS);
+        View[][] board = new View[ROWS][COLS];
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
 
                 View cell = new View(this);
 
@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
     private void startGameEngine(int[] colors) {
 
         this.gameEngine = new GameEngineImpl(
-                RandomColorBoardCreator.create(rows, cols, colors),
-                FloodStrategyFactory.create(rows, cols));
+                RandomColorBoardCreator.create(ROWS, COLS, colors),
+                FloodStrategyFactory.create(ROWS, COLS));
         this.gameEngine.addObserver(this);
         this.gameEngine.start();
     }
@@ -134,8 +134,8 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
 
         int[][] board = gameState.board();
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
 
                 this.board[i][j].setBackgroundColor(board[i][j]);
             }
