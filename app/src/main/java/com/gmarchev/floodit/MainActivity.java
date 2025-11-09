@@ -1,5 +1,6 @@
 package com.gmarchev.floodit;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
 
     private final int cols = 10;
 
+    private int[] colors;
+
     private TextView moveCounter;
 
     private View[][] board;
@@ -35,9 +38,7 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        moveCounter = findViewById(R.id.move_counter);
-
-        int[] colors = new int[] {
+        this.colors = new int[] {
                 ContextCompat.getColor(this, R.color.purple),
                 ContextCompat.getColor(this, R.color.teal),
                 ContextCompat.getColor(this, R.color.green),
@@ -46,14 +47,16 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
                 ContextCompat.getColor(this, R.color.blue)
         };
 
+        this.moveCounter = findViewById(R.id.move_counter);
+
         createBoard();
 
-        startGameEngine(colors);
+        startGameEngine(this.colors);
 
-        createColorButtons(colors);
+        createColorButtons(this.colors);
 
         Button newGameButton = findViewById(R.id.new_game_button);
-        newGameButton.setOnClickListener(v -> startGameEngine(colors));
+        newGameButton.setOnClickListener(v -> startGameEngine(this.colors));
     }
 
     private void createBoard() {
@@ -94,17 +97,22 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
     }
 
     private void createColorButtons(int[] colors) {
+
         LinearLayout buttonsLayout = findViewById(R.id.buttons_layout);
 
         for (int color : colors) {
+
             Button button = new Button(this);
             button.setBackgroundColor(color);
             button.setOnClickListener(v -> {
+
                 try {
+
                     gameEngine.flood(color);
+
                 } catch (InvalidInputException e) {
-                    // A more user-friendly error handling can be added here
-                    e.printStackTrace();
+
+                    showNewGameDialog(R.string.error_title, R.string.error_message);
                 }
             });
 
@@ -125,8 +133,25 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
+
                 this.board[i][j].setBackgroundColor(board[i][j]);
             }
         }
+
+        if (gameState.isComplete()) {
+
+            showNewGameDialog(R.string.won_game_title, R.string.won_game_message);
+        }
+    }
+
+    private void showNewGameDialog(int titleId, int messageId) {
+        new AlertDialog.Builder(this)
+                .setTitle(titleId)
+                .setMessage(messageId)
+                .setPositiveButton(
+                        R.string.new_game,
+                        (dialog, which) -> startGameEngine(this.colors))
+                .setCancelable(false)
+                .show();
     }
 }

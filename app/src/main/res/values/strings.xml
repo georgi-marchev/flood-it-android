@@ -2,4 +2,8 @@
     <string name="app_name">Flood It</string>
     <string name="moves_format">Moves: %d</string>
     <string name="new_game">New Game</string>
+    <string name="won_game_title">Congratulations!</string>
+    <string name="won_game_message">You flooded the board!</string>
+    <string name="error_title">Error!</string>
+    <string name="error_message">Something went wrong!</string>
 </resources>
