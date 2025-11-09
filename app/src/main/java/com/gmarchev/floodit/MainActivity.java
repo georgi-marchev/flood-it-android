@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -19,7 +20,11 @@ import com.gmarchev.floodit.core.strategy.FloodStrategyFactory;
 public class MainActivity extends AppCompatActivity implements GameObserver {
 
     private final int rows = 10;
+
     private final int cols = 10;
+
+    private TextView moveCounter;
+
     private View[][] board;
 
     private GameEngine gameEngine;
@@ -29,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        moveCounter = findViewById(R.id.move_counter);
 
         int[] colors = new int[] {
                 ContextCompat.getColor(this, R.color.purple),
@@ -108,6 +115,8 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
 
     @Override
     public void onGameStateUpdate(GameState gameState) {
+
+        moveCounter.setText(getString(R.string.moves_format, gameState.moveCount()));
 
         int[][] board = gameState.board();
 
