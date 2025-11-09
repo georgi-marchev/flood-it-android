@@ -6,4 +6,5 @@
     <string name="won_game_message">You flooded the board!</string>
     <string name="error_title">Error!</string>
     <string name="error_message">Something went wrong!</string>
+    <string name="undo">Undo</string>
 </resources>

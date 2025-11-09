@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
 
         Button newGameButton = findViewById(R.id.new_game_button);
         newGameButton.setOnClickListener(v -> startGameEngine(this.colors));
+
+        Button undoMoveButton = findViewById(R.id.undo_move_button);
+        undoMoveButton.setOnClickListener(v ->gameEngine.undo());
     }
 
     private void createBoard() {

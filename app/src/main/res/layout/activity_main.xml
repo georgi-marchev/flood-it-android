@@ -41,6 +41,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp"/>
 
+    <!-- Undo move button -->
+    <Button
+        android:id="@+id/undo_move_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/undo"
+        app:layout_constraintTop_toBottomOf="@+id/new_game_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
     <!-- Board -->
     <GridLayout
         android:id="@+id/board"
