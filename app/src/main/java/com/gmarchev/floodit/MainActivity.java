@@ -2,7 +2,9 @@ package com.gmarchev.floodit;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -11,6 +13,7 @@ import com.gmarchev.floodit.core.engine.GameEngine;
 import com.gmarchev.floodit.core.engine.GameEngineImpl;
 import com.gmarchev.floodit.core.engine.GameObserver;
 import com.gmarchev.floodit.core.engine.GameState;
+import com.gmarchev.floodit.core.engine.InvalidInputException;
 import com.gmarchev.floodit.core.strategy.FloodStrategyFactory;
 
 public class MainActivity extends AppCompatActivity implements GameObserver {
@@ -39,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
         createBoard();
 
         startGameEngine(colors);
+
+        createColorButtons(colors);
     }
 
     private void createBoard() {
@@ -76,6 +81,29 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
                 FloodStrategyFactory.create(rows, cols));
         this.gameEngine.addObserver(this);
         this.gameEngine.start();
+    }
+
+    private void createColorButtons(int[] colors) {
+        LinearLayout buttonsLayout = findViewById(R.id.buttons_layout);
+
+        for (int color : colors) {
+            Button button = new Button(this);
+            button.setBackgroundColor(color);
+            button.setOnClickListener(v -> {
+                try {
+                    gameEngine.flood(color);
+                } catch (InvalidInputException e) {
+                    // A more user-friendly error handling can be added here
+                    e.printStackTrace();
+                }
+            });
+
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(150, 150);
+            params.setMargins(16, 16, 16, 16);
+            button.setLayoutParams(params);
+
+            buttonsLayout.addView(button);
+        }
     }
 
     @Override
