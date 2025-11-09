@@ -30,6 +30,17 @@
         app:layout_constraintTop_toBottomOf="@+id/title"
         tools:text="Moves: 99" />
 
+    <!-- New game button -->
+    <Button
+        android:id="@+id/new_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_game"
+        app:layout_constraintTop_toBottomOf="@+id/move_counter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
     <!-- Board -->
     <GridLayout
         android:id="@+id/board"
@@ -42,7 +53,7 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/move_counter" />
+        app:layout_constraintTop_toBottomOf="@+id/new_game_button" />
 
     <!-- Color buttons -->
     <LinearLayout

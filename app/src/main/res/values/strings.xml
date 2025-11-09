@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Flood It</string>
     <string name="moves_format">Moves: %d</string>
+    <string name="new_game">New Game</string>
 </resources>
