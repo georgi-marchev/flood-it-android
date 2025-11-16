@@ -26,6 +26,10 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
 
     private int[] colors;
 
+    private HighScoreManager highScoreManager;
+
+    private TextView highScore;
+
     private TextView moveCounter;
 
     private View[][] board;
@@ -47,6 +51,11 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
                 ContextCompat.getColor(this, R.color.blue)
         };
 
+        this.highScoreManager = new HighScoreManager(this);
+        this.highScore = findViewById(R.id.high_score);
+        setHighScoreMessage(highScoreManager.getHighScore());
+
+
         this.moveCounter = findViewById(R.id.move_counter);
 
         createBoard();
@@ -60,6 +69,11 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
 
         Button undoMoveButton = findViewById(R.id.undo_move_button);
         undoMoveButton.setOnClickListener(v ->gameEngine.undo());
+    }
+
+    private void setHighScoreMessage(int highScore) {
+
+        this.highScore.setText(getString(R.string.high_score_format, highScore));
     }
 
     private void createBoard() {
@@ -130,7 +144,9 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
     @Override
     public void onGameStateUpdate(GameState gameState) {
 
-        moveCounter.setText(getString(R.string.moves_format, gameState.moveCount()));
+        int moveCount = gameState.moveCount();
+
+        moveCounter.setText(getString(R.string.moves_format, moveCount));
 
         int[][] board = gameState.board();
 
@@ -142,6 +158,14 @@ public class MainActivity extends AppCompatActivity implements GameObserver {
         }
 
         if (gameState.isComplete()) {
+
+            highScoreManager.getHighScore();
+
+            if (highScoreManager.getHighScore() > moveCount || !highScoreManager.highScoreIsSet()) {
+
+                highScoreManager.saveHighScore(moveCount);
+                setHighScoreMessage(moveCount);
+            }
 
             showNewGameDialog(R.string.won_game_title, R.string.won_game_message);
         }
